@@ -1,0 +1,71 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    	<h:outputStylesheet library="css" name="table-style.css"  />
+    </h:head>
+    <h:body>
+
+<!--  ADD PRODUCT -->
+
+<h:form>
+ <h:panelGrid columns="" >
+            <h:outputLabel value="Type Product :"   />
+		 	<h:inputText required="true" value="#{productBean.product.type_Product}" />
+		 	<h:outputLabel value="Price :"   />
+		 	<h:inputText value="#{productBean.product.price}" /> 
+		 	<h:outputLabel value="Availability :"   />
+		 	<h:inputText value="#{productBean.product.availability}" />             
+<h:commandButton value="Add Product" id="withIcon"  actionListener="#{productBean.AddProduct()}" icon="ui-icon-disk" ></h:commandButton>
+</h:panelGrid>
+  </h:form>
+
+<!--  /.ADD PRODUCT -->
+
+
+    	<h1>Products for Sale</h1>
+
+    		<h:dataTable value="#{productBean.list_prod}" var="p"
+    			styleClass="order-table"
+    			headerClass="order-table-header"
+    			rowClasses="order-table-odd-row,order-table-even-row">
+
+    			<h:column>
+    				<!-- column header -->
+    				<f:facet name="header">Type Product</f:facet>
+    				<!-- row record -->
+    				#{p.type_Product}
+    			</h:column>
+
+    			<h:column>
+    				<f:facet name="header">Price</f:facet>
+    				#{p.price}
+    			</h:column>
+
+    			<h:column>
+    				<f:facet name="header">Tools</f:facet>
+    				<h:commandButton value="wiiiiiw" icon="ui-icon-disk" >
+						<f:setPropertyActionListener value="#{p}" target="#{productBean.selectedProduct.id_Product}"></f:setPropertyActionListener>
+						 <f:ajax listener="#{productBean.ShowPanel(p)}" event="click" render="panel1"></f:ajax>	
+					</h:commandButton>
+					<h:commandButton value="Delete"   icon="ui-icon-disk" >
+					<f:setPropertyActionListener value="#{p}" target="#{productBean.DeleteProduct(p)}"></f:setPropertyActionListener>
+					</h:commandButton>  
+					
+					
+    				</h:column>
+    		</h:dataTable> 
+
+<h:panelGroup layout="block" rendered="true" id="panel1">
+            <h:form>
+                <h:inputText value="#{productBean.selectedProduct.id_Product}" />
+            	<h:inputText value="#{productBean.selectedProduct.type_Product}" />
+            	<h:inputText value="#{productBean.selectedProduct.price}" />     
+            	<h:inputText value="#{productBean.selectedProduct.availability}" />
+            	<h:commandButton value="Update" action="#{productBean.update()}" type="submit"></h:commandButton>
+            </h:form>
+</h:panelGroup>
+    </h:body>
+</html>

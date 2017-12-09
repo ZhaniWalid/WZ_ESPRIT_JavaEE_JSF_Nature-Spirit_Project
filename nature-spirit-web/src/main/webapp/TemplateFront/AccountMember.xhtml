@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrought"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"> 
+      
+<h:head>
+ 
+     <h:outputStylesheet library="css" name="table-style.css"  />
+     <title>Member Bank Accounts</title>
+    
+</h:head>
+
+<h:body>
+
+<h:form style="margin-left:30%;">        
+
+<h1> Add New Bank Account  </h1>
+ <h:panelGrid columns="" rendered="true">
+		 	<p:outputLabel value="Ammount Of Credit to Insert : *"   />
+		 	<b:inputText value="#{accountMemberBean.account.credit}" style="width:500px;" id="ammount" requiredMessage="Ammount is Required" required="true"/>	 
+		 	<h:message for="ammount" style="color:red;font-size:19px;"/>      
+  <br></br> 
+<b:commandButton value="Add Bank Account"  icon-size="2x" iconAwesome="thumbs-up" look="info" title="icon-size='2x'"  actionListener="#{accountMemberBean.AddAccountMember()}" style="width:500px;"/>                
+    </h:panelGrid>
+
+  </h:form>
+
+<br></br>
+
+<p:dataTable var="account" value="#{accountMemberBean.list_accounts}">
+    
+    <p:column headerText="#">
+        <h:outputText value="#{account.id_Account}" />
+    </p:column>
+ 
+    <p:column headerText="Rib Number">
+        <h:outputText value="#{account.rib_Number}" />
+    </p:column>
+ 
+    <p:column headerText="Credit">
+        <h:outputText value="#{account.credit}" />
+    </p:column>
+
+</p:dataTable>
+</h:body> 
+</html>

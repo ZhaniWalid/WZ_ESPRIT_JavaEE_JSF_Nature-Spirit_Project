@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrought"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"> 
+      
+<h:head>
+ 
+     <h:outputStylesheet library="css" name="table-style.css"  />
+     <title>Member Purchase Product</title>
+    
+</h:head>
+
+<h:body>
+ 
+ <h:form method="post">
+ <div style="margin-left:40%;">
+ <h1> Our Products </h1>
+   <b:inputText placeholder="Search by Type OR Brand of Product : "  value="#{productBean.products_search}" name="search"  style="width:500px;"/>
+       <div style="margin-left:25%;">
+          <b:commandButton action="#{productBean.SearchByInputText()}" value="search" icon-spin="true" iconAwesome="thumbs-down" look="info" title="spin='true'">
+             <f:param name="nameAuc" value="#{productBean.products_search}"></f:param>
+          </b:commandButton>
+       </div>           
+ </div>
+    <p:dataGrid var="product" value="#{productBean.list_prod}" columns="3" layout="grid"
+        rows="3" paginator="true" id="cats"
+        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+        rowsPerPageTemplate="3,6,12,16">
+   
+        <f:facet name="header">
+           Our Products
+        </f:facet>
+ 
+        <p:panel header="#{product.id_Product}" style="text-align:center">    
+            <h:panelGrid columns="2" style="width:100%">
+       Type  : <h:outputText value="#{product.type_Product}" />   
+       Brand : <h:outputText value="#{product.brand}" />     
+       Unit Price : <h:outputText value="#{product.price}" />			 		
+       Quantity : <h:outputText value="#{product.quantity_of_products}" />
+       Availability : <h:outputText value="#{product.availability_String}" />   
+   
+       
+   <form>
+                       
+                       <b:commandButton value="Purchase3" look="danger" icon="ui-icon-disk">                     
+					<f:setPropertyActionListener  value="#{product}" target="#{purchaseProductBean.product}"></f:setPropertyActionListener>
+					<f:ajax actionListener="#{purchaseProductBean.doPurchase(product,product.quantity_of_products)}" event="click" render="cats"></f:ajax>	
+			   </b:commandButton>  
+                                
+            	<b:commandButton value="Purchase"  actionListener="#{purchaseProductBean.doPurchase(product,product.quantity_of_products)}"></b:commandButton>
+               
+<b:commandButton value="Purchase2" icon="ui-icon-disk">                      
+					<f:setPropertyActionListener  value="#{product}" target="#{purchaseProductBean.doPurchase(product)}"></f:setPropertyActionListener>
+					<f:ajax listener="#{purchaseProductBean.doPurchase(product,product.quantity_of_products)}" event="click" render="cats"></f:ajax>	
+			  </b:commandButton>     	    
+	</form>             
+            <br></br>
+                
+            <br></br>
+                     
+                    <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
+                   
+              
+            </h:panelGrid>
+        </p:panel>
+ 
+    </p:dataGrid>
+</h:form> 	
+</h:body>
+</html>
